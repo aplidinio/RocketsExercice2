@@ -11,21 +11,21 @@ public class MainRocket {
 		// TODO Auto-generated method stub
 		
 		ArrayList <Thruster> thrustersRocket1=new ArrayList<Thruster>();
-		Thruster t1R1= new Thruster (1,10,1);
-		Thruster t2R1= new Thruster (2,30,1);
-		Thruster t3R1= new Thruster (3,80,1);
+		Thruster t1R1= new Thruster (1,1,10,0);
+		Thruster t2R1= new Thruster (1,2,30,0);
+		Thruster t3R1= new Thruster (1,3,80,0);
 
 		thrustersRocket1.add(t1R1);
 		thrustersRocket1.add(t2R1);
 		thrustersRocket1.add(t3R1);
 		
 		ArrayList <Thruster> thrustersRocket2=new ArrayList<Thruster>();
-		Thruster t1R2= new Thruster (1,30,2);
-		Thruster t2R2= new Thruster (2,40,2);
-		Thruster t3R2= new Thruster (3,50,2);
-		Thruster t4R2= new Thruster (4,50,2);
-		Thruster t5R2= new Thruster (5,30,2);
-		Thruster t6R2= new Thruster (6,10,2);
+		Thruster t1R2= new Thruster (2,1,30,0);
+		Thruster t2R2= new Thruster (2,2,40,0);
+		Thruster t3R2= new Thruster (2,3,50,0);
+		Thruster t4R2= new Thruster (2,4,50,0);
+		Thruster t5R2= new Thruster (2,5,30,0);
+		Thruster t6R2= new Thruster (2,6,10,0);
 
 		thrustersRocket2.add(t1R2);
 		thrustersRocket2.add(t2R2);

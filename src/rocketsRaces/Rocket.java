@@ -7,7 +7,7 @@ public class Rocket extends Thread implements Runnable{
 	private String codeRocket;
 	private ArrayList <Thruster> thrusters= new ArrayList<Thruster>();
 	private int []speed;
-	private int totalPower, sum;
+	private static int totalPower, sum;
 	
 	public Rocket(String codeRocket, ArrayList<Thruster> thrusters, int []speed) {
 		
@@ -58,10 +58,11 @@ public class Rocket extends Thread implements Runnable{
 		int currentSpeed = 100 *(int) Math.sqrt(totalPower);
 		
 		System.out.println("Current speed: " +currentSpeed);
+
 			
 	}
 	
-	public void setMaxPower() {//esto da la potencia máxima de todos los trusters
+	/*public void setRocketMaxPower() {//esto da la potencia máxima de todos los trusters
 		
 		int totalPower=0;
 				
@@ -71,12 +72,12 @@ public class Rocket extends Thread implements Runnable{
 		}	
 				
 		this.totalPower=totalPower;
-	}
+	}*/
 	
-	public int getMaxPower() {
+	/*public static int getRocketMaxPower() {
 		return totalPower;
 	}
-	public void setFlyProgram() {// esto da la suma de todas las acelraciones y deceleraciones
+	public void setRocketFlyProgram() {// esto da la suma de todas las acelraciones y deceleraciones
 		
 		int sum=0;
 		
@@ -85,9 +86,9 @@ public class Rocket extends Thread implements Runnable{
 		}
 		this.sum=sum;
 	}
-	public int getFlyProgram() {
+	public static int getRocketFlyProgram() {
 		return sum;
-	}
+	}*/
 	
 	
 	@Override
@@ -95,10 +96,12 @@ public class Rocket extends Thread implements Runnable{
 		return "Rocket [codeRocket=" + this.getCodeRocket() + " thrusters=" + this.getThrusters().size() + "]";
 	}
 	
-	public void run() {
+	public synchronized void run() {
+		
 		
 		for(int i=0; i<thrusters.size(); i++) {
 			
+			thrusters.get(i).setAccelerate(5);
 			thrusters.get(i).start();// probar Executor para que empiecen todos a la vez
 			
 		}
@@ -114,6 +117,32 @@ public class Rocket extends Thread implements Runnable{
 			}
 			
 		}
+		try {
+			wait();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		for(int i=0; i<thrusters.size(); i++) {
+			
+			thrusters.get(i).setAccelerate(-5);
+			thrusters.get(i).start();// probar Executor para que empiecen todos a la vez
+			
+		}
+		
+		//buscar el thruster + potente
+		while (this.getThrusters().get(0).isAlive()) {//pillamos un thruster cualquiera
+			showSpeed();
+			try {
+				sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		notifyAll();
 
 	}
 	
