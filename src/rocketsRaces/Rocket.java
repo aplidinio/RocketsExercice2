@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Rocket extends Thread implements Runnable {
+public class Rocket extends Thread{
 	
 	private String codeRocket;
 	private ArrayList <Thruster> thrusters= new ArrayList<Thruster>();
@@ -67,33 +67,57 @@ public class Rocket extends Thread implements Runnable {
 		return "Rocket [codeRocket=" + this.getCodeRocket() + " thrusters=" + this.getThrusters().size() + "]";
 	}
 	
-	public synchronized void setAcceleration(int []speed) {
+	public void setAcceleration(int []speed) {
+			
 		
-		//ExecutorService executor = Executors.newFixedThreadPool(thrusters.size());
-		for (int j=0; j<speed.length; j++) {
-					
-			for(int i=0; i<thrusters.size(); i++) {
-				//Runnable engine = new Thruster(1,i,thrusters.get(i).getMaxPower());
-				thrusters.get(i).setAccelerate(speed[j]);
-				//executor.execute(engine);
-				//executor.execute(new Thread(thrusters.get(i)).start());
-				new Thread(thrusters.get(i)).start();
-				}
+		ExecutorService executor = Executors.newFixedThreadPool(thrusters.size());
+			
+			//for (int i=0; i<speed.length; i++) {
+			for (int j=0; j<thrusters.size(); j++) {
+				
+				Runnable thruster = new Thruster(1,thrusters.get(j).getIdentification(), thrusters.get(j).getMaxPower(), speed[0]);
+				executor.execute(thruster);
+			}
+		//	}
+			for (int j=0; j<thrusters.size(); j++) {
+				
+				Runnable thruster = new Thruster(1,thrusters.get(j).getIdentification(), thrusters.get(j).getMaxPower(), speed[1]);
+				executor.execute(thruster);
+			}
+			for (int j=0; j<thrusters.size(); j++) {
+				
+				Runnable thruster = new Thruster(1,thrusters.get(j).getIdentification(), thrusters.get(j).getMaxPower(), speed[2]);
+				executor.execute(thruster);
+			}
+			
 		
-			while (this.getThrusters().get(0).isAlive()) {//pillamos un thruster cualquiera
+			
+			
+			executor.shutdown();
+			while (!executor.isTerminated()) {//pillamos un thruster cualquiera
 				showSpeed();
 				try {
-					sleep(20);
+					sleep(200);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			
+				
 			}
-		}
+			while(!executor.isTerminated()) {}
+			}
+			
+			
+			
+		
+}
 		
 		
-	}
+	
+	
+		
+		
+	
 	
 	
 	
@@ -111,7 +135,7 @@ public class Rocket extends Thread implements Runnable {
 		
 		for(int i=0; i<thrusters.size(); i++) {
 			
-			thrusters.get(i).setAccelerate(5);//PROBAR UNA MATRIZ EN THRUSTERS CON LA ACELERACIÓN
+			thrusters.get(i).setAccelerate(5);//PROBAR UNA MATRIZ EN THRUSTERS CON LA ACELERACIï¿½N
 			thrusters.get(i).start();// probar Executor para que empiecen todos a la vez
 			
 		}
@@ -153,4 +177,4 @@ public class Rocket extends Thread implements Runnable {
 
 	}*/
 	
-}
+

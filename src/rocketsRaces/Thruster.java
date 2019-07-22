@@ -8,11 +8,12 @@ public class Thruster extends Thread {
 	private int accelerate;
 	private int currentPower;
 	
-	public Thruster(int rocket, int identification, int maxPower) {
+	public Thruster(int rocket, int identification, int maxPower, int accelerate) {
 		
 		this.rocket=rocket;
 		this.identification=identification;
 		this.maxPower=maxPower;
+		this.accelerate=accelerate;
 	}
 	
 	public int getRocket() {
@@ -59,12 +60,10 @@ public class Thruster extends Thread {
 		
 	public void run() {
 		
-		//shutDown.lock();
-		try {
 			
 			if (accelerate>0) {
 			
-				for (int i=0; i<=100; i+=accelerate) {
+				for (int i=0; i<=this.getMaxPower(); i+=(int)(this.getMaxPower()/accelerate)) {
 			
 					if(this.getMaxPower()>=i) 
 						currentPower=i;
@@ -82,7 +81,7 @@ public class Thruster extends Thread {
 				
 			} else if (accelerate<0) {
 			
-				for (int i=100; i>=0; i-=accelerate) {
+				for (int i=this.getMaxPower(); i>=0; i+=(int)(this.getMaxPower()/accelerate)) {
 				
 					if(this.getMaxPower()>=i) 
 						currentPower=i;
@@ -101,12 +100,8 @@ public class Thruster extends Thread {
 			
 			} else currentPower=accelerate;
 			
-			
-		}finally {
-			
-			//shutDown.unlock();
+	
 		}
-		
-	}
+
 
 }
