@@ -1,8 +1,5 @@
 package rocketsRaces;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 public class Thruster extends Thread {
 	
 	private int rocket;
@@ -11,12 +8,11 @@ public class Thruster extends Thread {
 	private int accelerate;
 	private int currentPower;
 	
-	public Thruster(int rocket, int identification, int maxPower, int accelerate) {
+	public Thruster(int rocket, int identification, int maxPower) {
 		
 		this.rocket=rocket;
 		this.identification=identification;
 		this.maxPower=maxPower;
-		this.accelerate=accelerate;
 	}
 	
 	public int getRocket() {
