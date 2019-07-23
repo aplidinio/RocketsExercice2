@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class Rocket extends Thread{
+public class Rocket extends Thread implements Runnable{
 	
 	private String codeRocket;
 	private ArrayList <Thruster> thrusters= new ArrayList<Thruster>();
@@ -58,7 +58,7 @@ public class Rocket extends Thread{
 			totalPower+=thruster.getCurrentPower();
 		}
 		
-		int currentSpeed = 100 *(int) Math.sqrt(totalPower);
+		int currentSpeed = (int)(100 *Math.sqrt(totalPower));
 		
 		System.out.println("Current speed: " +currentSpeed);
 			
@@ -75,13 +75,14 @@ public class Rocket extends Thread{
 			
 			for (int i=0; i<speed.length; i++) {
 				for (int j=0; j<thrusters.size(); j++) {
-					Runnable thruster = new Thruster(thrusters.get(j).getRocket(),thrusters.get(j).getIdentification(), thrusters.get(j).getMaxPower(), speed[i]);
+					thrusters.get(j).setAccelerate(speed[i]);//faltaba esto
+					Runnable thruster = new Thread(thrusters.get(j));//y esto, el new Thread con thrusters
 					executor.execute(thruster);
 				}
 			}
 			
 			executor.shutdown();
-			while (!executor.isTerminated()) {//pillamos un thruster cualquiera
+			while (!executor.isTerminated()) {
 				showSpeed();
 				try {
 					sleep(200);
@@ -93,11 +94,31 @@ public class Rocket extends Thread{
 			}
 			while(!executor.isTerminated()) {}
 			}
+	
+	/*public void setAcceleration(int []speed) {
+		
+		for (int i=0; i<speed.length; i++) {
+			for (int j=0; j<thrusters.size(); j++) {
+				
+				thrusters.get(j).setAccelerate(speed[i]);
+				new Thread(thrusters.get(j)).start();
+			}
+		}
+		while (!this.getThrusters().get(0).isAlive()) {//pillamos un thruster cualquiera
+			showSpeed();
+			try {
+				sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+	}*/
 			
 			
 			
 		
-}
+
 		
 		
 	
@@ -117,7 +138,7 @@ public class Rocket extends Thread{
 	
 	
 	
-	/*public void run() {
+/*	public void run() {
 		
 		
 		for(int i=0; i<thrusters.size(); i++) {
@@ -138,7 +159,7 @@ public class Rocket extends Thread{
 			}
 			
 		}
-		/*for(int i=0; i<thrusters.size(); i++) {
+		for(int i=0; i<thrusters.size(); i++) {
 			thrusters.get(i).s
 		}
 		
@@ -160,9 +181,8 @@ public class Rocket extends Thread{
 				e.printStackTrace();
 			}
 			
-		}
-
-	}
-}*/
+		}*/
+	
+}
 	
 

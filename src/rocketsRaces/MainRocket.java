@@ -2,8 +2,6 @@ package rocketsRaces;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MainRocket {
 
@@ -42,27 +40,20 @@ public class MainRocket {
 		
 		System.out.println("Rocket " + rocket1.getCodeRocket() + " has " + rocket1.getThrusters().size() + " trusters. \n");
 		System.out.println("");
+		
 		rocket1.setAcceleration(speed1);
 		
 		System.out.println();		
 		System.out.println("Rocket " + rocket2.getCodeRocket() + " has " + rocket2.getThrusters().size() + " trusters. \n");
 		System.out.println("");
-		
-		
-		
-		rocket2.setAcceleration(speed2);
+	
 		
 		Scanner sc = new Scanner(System.in);
 		String a= sc.nextLine();
 		System.out.println();
 		
-		
-		
+		rocket2.setAcceleration(speed2);
 
-		///Scanner sc = new Scanner(System.in);
-		//String a= sc.nextLine();
-		
-		//rocket2.start();
 
 	}
 

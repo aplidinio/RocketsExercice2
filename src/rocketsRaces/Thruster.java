@@ -2,7 +2,7 @@ package rocketsRaces;
 
 import java.util.concurrent.Callable;
 
-public class Thruster extends Thread implements Callable {
+public class Thruster extends Thread  {
 	
 	private int rocket;
 	private int identification;
@@ -64,7 +64,7 @@ public class Thruster extends Thread implements Callable {
 		
 		int z=(Math.round(this.getMaxPower()/accelerate));
 		
-		if (z<1 && z>=0) {//Necesario porque si no, falla el thruster de 10 de potencia al dar z=0 en la 3ª fase
+		if (z<1 && z>=0) {//Necesario porque si no, falla el thruster de 10 de potencia al dar z=0 en la 3ï¿½ fase
 			z=1;
 		} else if (z>-1 && z<0) z=-1;
 			
@@ -109,12 +109,6 @@ public class Thruster extends Thread implements Callable {
 			
 	
 		}
-
-	@Override
-	public Object call() throws Exception {
-		// TODO Auto-generated method stub
-		return currentPower;
-	}
 
 
 }
