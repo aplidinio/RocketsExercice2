@@ -1,8 +1,10 @@
 package rocketsRaces;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Rocket extends Thread{
 	
@@ -68,30 +70,15 @@ public class Rocket extends Thread{
 	}
 	
 	public void setAcceleration(int []speed) {
-			
 		
 		ExecutorService executor = Executors.newFixedThreadPool(thrusters.size());
 			
-			//for (int i=0; i<speed.length; i++) {
-			for (int j=0; j<thrusters.size(); j++) {
-				
-				Runnable thruster = new Thruster(1,thrusters.get(j).getIdentification(), thrusters.get(j).getMaxPower(), speed[0]);
-				executor.execute(thruster);
+			for (int i=0; i<speed.length; i++) {
+				for (int j=0; j<thrusters.size(); j++) {
+					Runnable thruster = new Thruster(thrusters.get(j).getRocket(),thrusters.get(j).getIdentification(), thrusters.get(j).getMaxPower(), speed[i]);
+					executor.execute(thruster);
+				}
 			}
-		//	}
-			for (int j=0; j<thrusters.size(); j++) {
-				
-				Runnable thruster = new Thruster(1,thrusters.get(j).getIdentification(), thrusters.get(j).getMaxPower(), speed[1]);
-				executor.execute(thruster);
-			}
-			for (int j=0; j<thrusters.size(); j++) {
-				
-				Runnable thruster = new Thruster(1,thrusters.get(j).getIdentification(), thrusters.get(j).getMaxPower(), speed[2]);
-				executor.execute(thruster);
-			}
-			
-		
-			
 			
 			executor.shutdown();
 			while (!executor.isTerminated()) {//pillamos un thruster cualquiera
@@ -151,7 +138,7 @@ public class Rocket extends Thread{
 			}
 			
 		}
-		for(int i=0; i<thrusters.size(); i++) {
+		/*for(int i=0; i<thrusters.size(); i++) {
 			thrusters.get(i).s
 		}
 		
@@ -175,6 +162,7 @@ public class Rocket extends Thread{
 			
 		}
 
-	}*/
+	}
+}*/
 	
 
