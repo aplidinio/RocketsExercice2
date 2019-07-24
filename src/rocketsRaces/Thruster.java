@@ -71,7 +71,7 @@ public class Thruster extends Thread  {
 			
 			if (accelerate>0) {
 				
-			
+			//eliminat todo, incluso accelerate. Generar aquí un único impulso
 				for (int i=0; i<=this.getMaxPower(); i+=z) {
 			
 					if(this.getMaxPower()>=i) 
