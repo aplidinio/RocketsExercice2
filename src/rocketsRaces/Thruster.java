@@ -62,7 +62,8 @@ public class Thruster extends Thread  {
 		
 	public void run() {
 		
-		int z=(Math.round(this.getMaxPower()/accelerate));
+		int z=((this.getMaxPower()/accelerate));
+		System.out.println("Valor de " + accelerate + " " + z);
 		
 		if (z<1 && z>=0) {//Necesario porque si no, falla el thruster de 10 de potencia al dar z=0 en la 3� fase
 			z=1;

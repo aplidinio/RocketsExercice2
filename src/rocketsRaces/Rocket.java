@@ -69,17 +69,19 @@ public class Rocket extends Thread implements Runnable{
 		return "Rocket [codeRocket=" + this.getCodeRocket() + " thrusters=" + this.getThrusters().size() + "]";
 	}
 	
-	public void setAcceleration(int []speed) {
+	public void setAcceleration() {
 		
 		ExecutorService executor = Executors.newFixedThreadPool(thrusters.size());
 			
+		if(this.codeRocket=="32WESSDS") {
 			for (int i=0; i<speed.length; i++) {
 				for (int j=0; j<thrusters.size(); j++) {
-					thrusters.get(j).setAccelerate(speed[i]);//faltaba esto
+					thrusters.get(j).setAccelerate(this.speed[i]);//faltaba esto
 					Runnable thruster = new Thread(thrusters.get(j));//y esto, el new Thread con thrusters
 					executor.execute(thruster);
 				}
 			}
+		}
 			
 			executor.shutdown();
 			while (!executor.isTerminated()) {
