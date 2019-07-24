@@ -11,12 +11,14 @@ public class Rocket extends Thread implements Runnable{
 	private String codeRocket;
 	private ArrayList <Thruster> thrusters= new ArrayList<Thruster>();
 	private int []speed;
+	private int []power;
 	
-	public Rocket(String codeRocket, ArrayList<Thruster> thrusters, int []speed) {
+	public Rocket(String codeRocket, ArrayList<Thruster> thrusters, int []speed, int []power) {
 		
 		this.codeRocket=codeRocket;
 		this.thrusters=thrusters;
 		this.speed=speed;
+		this.power=power;
 	}
 		
 	public String getCodeRocket() {
@@ -41,6 +43,14 @@ public class Rocket extends Thread implements Runnable{
 
 	public void setSpeed(int []speed) {
 		this.speed = speed;
+	}
+	
+	public int[] getPower() {
+		return power;
+	}
+
+	public void setPower(int[] power) {
+		this.power = power;
 	}
 
 	public void showAllThrustersData() {
@@ -73,14 +83,17 @@ public class Rocket extends Thread implements Runnable{
 		
 		ExecutorService executor = Executors.newFixedThreadPool(thrusters.size());
 			
-		if(this.codeRocket=="32WESSDS") {
 			for (int i=0; i<speed.length; i++) {
+				System.out.println("Nuevo impulso");
 				for (int j=0; j<thrusters.size(); j++) {
+					thrusters.get(j).setInitialPower(this.power[i]);
+					thrusters.get(j).setFinalPower(this.power[i+1]);
 					thrusters.get(j).setAccelerate(this.speed[i]);//faltaba esto
 					Runnable thruster = new Thread(thrusters.get(j));//y esto, el new Thread con thrusters
 					executor.execute(thruster);
 				}
-			}
+			
+			
 		}
 			
 			executor.shutdown();
